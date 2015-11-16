@@ -42,7 +42,7 @@ namespace com.github.yedijas.util
         /// <param name="FileName">Name of the target excel file.</param>
         public static void DataTableToCSV(DataTable DataToExport, string Path, string FileName)
         {
-            CSVutil.DataTableToCSV(DataToExport, Path, FileName);
+            CSVUtil.DataTableToCSV(DataToExport, Path, FileName);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace com.github.yedijas.util
         /// the file name and extension.</param>
         public static void DataTableToCSV(DataTable DataToExport, string CompleteFilePath)
         {
-            CSVutil.DataTableToCSV(DataToExport, CompleteFilePath);
+            CSVUtil.DataTableToCSV(DataToExport, CompleteFilePath);
         }
 
         /// <summary>

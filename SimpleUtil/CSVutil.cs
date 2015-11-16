@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
@@ -7,7 +8,7 @@ namespace com.github.yedijas.util
     /// <summary>
     /// This class is used to ease the common process that are related with CSV file.
     /// </summary>
-    class CSVutil
+    class CSVUtil
     {
         #region static methods
         /// <summary>
@@ -190,10 +191,16 @@ namespace com.github.yedijas.util
             }
         }
 
-
+        /// <summary>
+        /// Export data from CSV file given the full filename.
+        /// </summary>
+        /// <param name="FileName">CSV file</param>
+        /// <returns>DataTable containing data from CSV file. All columns are in string type.</returns>
         public static System.Data.DataTable CSVToDataTable(string FileName)
         {
+            #region logic
             System.Data.DataTable result = new System.Data.DataTable();
+            System.IO.StreamReader fileReader = null;
             if (!System.IO.File.Exists(FileName))
             {
                 throw new System.IO.IOException("File not found!");
@@ -204,25 +211,57 @@ namespace com.github.yedijas.util
             }
             try
             {
-                System.IO.StreamReader fileReader = new System.IO.StreamReader(FileName);
-                string Header = fileReader.ReadLine();
-
+                fileReader = new System.IO.StreamReader(FileName);
+                List<string> headers = RowToList(fileReader.ReadLine());
+                foreach (string header in headers)
+                {
+                    System.Data.DataColumn tempColumn = new System.Data.DataColumn();
+                    tempColumn.ColumnName = header;
+                    tempColumn.DataType = Type.GetType("System.String");
+                    result.Columns.Add(tempColumn);
+                    tempColumn = null;
+                }
+                string singleRow = "";
+                while ((singleRow = fileReader.ReadLine()) != null)
+                {
+                    System.Data.DataRow tempRow = result.NewRow();
+                    List<string> dataInList = RowToList(singleRow);
+                    for (int i = 0; i < result.Columns.Count; i++)
+                    {
+                        tempRow.ItemArray[i] = dataInList[i];
+                    }
+                }
             }
+            #endregion
+            #region exception handling
             catch (Exception AllEx)
             {
                 throw AllEx;
             }
             finally
             {
-
+                if (fileReader.BaseStream.CanRead)
+                {
+                    fileReader.Close();
+                }
+                fileReader = null;
             }
+            #endregion
             return result;
         }
 
+        /// <summary>
+        /// Convert from comma separated string to list of string.
+        /// </summary>
+        /// <param name="SingleRow">A comma separated string to process.</param>
+        /// <returns>List of string containing data.</returns>
         public static List<string> RowToList(string SingleRow)
         {
             List<string> result = new List<string>();
-
+            foreach (string data in SingleRow.Split(','))
+            {
+                result.Add(data);
+            }
             return result;
         }
         #endregion
