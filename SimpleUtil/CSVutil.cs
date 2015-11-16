@@ -191,8 +191,39 @@ namespace com.github.yedijas.util
         }
 
 
-        public static System.Data.DataTable CSVToDataTable()
+        public static System.Data.DataTable CSVToDataTable(string FileName)
         {
+            System.Data.DataTable result = new System.Data.DataTable();
+            if (!System.IO.File.Exists(FileName))
+            {
+                throw new System.IO.IOException("File not found!");
+            }
+            if (new System.IO.FileInfo(FileName).Length == 0)
+            {
+                throw new Exception("File is EMPTY!");
+            }
+            try
+            {
+                System.IO.StreamReader fileReader = new System.IO.StreamReader(FileName);
+                string Header = fileReader.ReadLine();
+
+            }
+            catch (Exception AllEx)
+            {
+                throw AllEx;
+            }
+            finally
+            {
+
+            }
+            return result;
+        }
+
+        public static List<string> RowToList(string SingleRow)
+        {
+            List<string> result = new List<string>();
+
+            return result;
         }
         #endregion
     }
