@@ -189,6 +189,11 @@ namespace com.github.yedijas.util
                 throw allEx;
             }
         }
+
+
+        public static System.Data.DataTable CSVToDataTable()
+        {
+        }
         #endregion
     }
 }
