@@ -54,11 +54,11 @@ namespace com.github.yedijas.util
         }
 
         /// <summary>
-        /// Deserialize a string of known type to an object.
+        /// Deserialize an XML string of known type to an object.
         /// </summary>
         /// <typeparam name="T">Type of the object.</typeparam>
-        /// <param name="XML"></param>
-        /// <returns></returns>
+        /// <param name="XML">XML string to be processed.</param>
+        /// <returns>An T object from XML.</returns>
         public static T DeserializeXMLString<T>(string XML)
         {
             try
@@ -72,7 +72,13 @@ namespace com.github.yedijas.util
             }
         }
 
-
+        /// <summary>
+        /// Deserialize an XML string of known type to an object.
+        /// Good when the type is known at runtime.
+        /// </summary>
+        /// <param name="XML">XML string to be processed.</param>
+        /// <param name="ResultType">Type of the resulted object.</param>
+        /// <returns>An object with given type.</returns>
         public static object DeserializeXMLString(string XML, Type ResultType)
         {
             MemoryStream XMLstream = new MemoryStream();
@@ -94,6 +100,12 @@ namespace com.github.yedijas.util
             return result;
         }
 
+        /// <summary>
+        /// Deserialize an XML file of known type to an object.
+        /// </summary>
+        /// <typeparam name="T">Type of the object.</typeparam>
+        /// <param name="FileName">Complete XML file name.</param>
+        /// <returns>An object with given type.</returns>
         public static T DeserializeXMLFile<T>(string FileName)
         {
             try
@@ -107,6 +119,13 @@ namespace com.github.yedijas.util
             }
         }
 
+        /// <summary>
+        /// Deserialize an XML file of known type to an object.
+        /// Good when the type is known at runtime.
+        /// </summary>
+        /// <param name="FileName">Complete XML file name</param>
+        /// <param name="ResultType">Type of the resulted object.</param>
+        /// <returns>An object with given type.</returns>
         public static object DeserializeXMLFile(string FileName, Type ResultType)
         {
             FileStream fileStream = new FileStream(FileName, FileMode.Open);
@@ -125,6 +144,12 @@ namespace com.github.yedijas.util
             return result;
         }
 
+        /// <summary>
+        /// Deserialize a stream filled with XML string of known type to an object.
+        /// </summary>
+        /// <typeparam name="T">Type of the object.</typeparam>
+        /// <param name="FileStream">Stream filled with XML.</param>
+        /// <returns>An object with given type.</returns>
         public static T DeserializeXMLStream<T>(Stream FileStream)
         {
             try
@@ -138,6 +163,13 @@ namespace com.github.yedijas.util
             }
         }
 
+        /// <summary>
+        /// Deserialize a stream filled with XML string of known type to an object.
+        /// Good when the type is known at runtime.
+        /// </summary>
+        /// <param name="FileStream">Stream filled with XML.</param>
+        /// <param name="ResultType">Type of the resulted object.</param>
+        /// <returns>An object with given type.</returns>
         public static object DeserializeXMLStream(Stream FileStream, Type ResultType)
         {
             XmlSerializer serializer = new XmlSerializer(ResultType);
